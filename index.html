@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PD Bootcamp Schedule Website</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+    <link rel="stylesheet" href="/styles/style.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="module" src="/src/main.ts" defer></script>
+    <script defer>
+      window.addEventListener('load', function () {
+        let elems = document.querySelectorAll('.collapsible');
+        let instances = M.Collapsible.init(elems);
+
+        async function delNodes(nList) {
+          await nList.forEach((n) => n.remove());
+        }
+
+        const day1Links = document.querySelectorAll(
+          '.day-1 > .card-action > a',
+        );
+        const day2Links = document.querySelectorAll(
+          '.day-2 > .card-action > a',
+        );
+
+        const allMatsDay1Links = document.querySelectorAll('.day1-all-links');
+        const allMatsDay2Links = document.querySelectorAll('.day2-all-links');
+
+        const allLinks = document.querySelectorAll('.all-links');
+        let now = new Date();
+
+        const day1Date = new Date(2026, 5, 26);
+        const day2Date = new Date(2026, 5, 27);
+
+        if (now < day1Date) {
+          delNodes([
+            ...day1Links,
+            ...day2Links,
+            ...allMatsDay1Links,
+            ...allMatsDay2Links,
+          ]);
+        } else if (now < day2Date) {
+          delNodes([...day2Links, ...allMatsDay2Links]);
+        } else {
+          console.log("It's last day, not deleting anything");
+        }
+
+        const activities = document.querySelectorAll(
+          '.sched-item > .card-content',
+        );
+        for (let act of activities) {
+          let actSize = parseInt(act.querySelector('.hidden').innerText);
+          let increase = 60 * (actSize / 15 - 1);
+          act.style.height = `${120 + increase}px`;
+        }
+      });
+    </script>
+  </body>
+</html>
