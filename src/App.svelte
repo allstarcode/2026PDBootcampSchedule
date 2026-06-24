@@ -109,7 +109,7 @@
       on:click={LITATFClicked}
       bind:this={LITATFBtn}
     >
-      LI / TA / TA
+      LI / TA / TF
     </button>
     <button
       class="waves-effect waves-light btn btn-large schedule-btn"
